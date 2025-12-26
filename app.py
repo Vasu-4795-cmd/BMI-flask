@@ -1,10 +1,17 @@
 from flask import Flask, render_template, request, redirect, url_for, session
+import mysql.connector
 
 app = Flask(__name__)
 app.secret_key = "secret123"
 
-# Temporary user storage
-users = {}
+# MySQL connection
+db = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="Deva@123",
+    database="bmi_app2"
+)
+cursor = db.cursor()
 
 @app.route("/", methods=["GET", "POST"])
 def bmi():
@@ -39,7 +46,13 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
 
-        if username in users and users[username] == password:
+        cursor.execute(
+            "SELECT * FROM users WHERE username=%s AND password=%s",
+            (username, password)
+        )
+        user = cursor.fetchone()
+
+        if user:
             session["user"] = username
             return redirect(url_for("bmi"))
         else:
@@ -53,12 +66,23 @@ def register():
     error = None
     if request.method == "POST":
         username = request.form["username"]
+        email = request.form["email"]   # added
         password = request.form["password"]
 
-        if username in users:
+        cursor.execute(
+            "SELECT * FROM users WHERE username=%s OR email=%s",
+            (username, email)
+        )
+        existing_user = cursor.fetchone()
+
+        if existing_user:
             error = "User already exists"
         else:
-            users[username] = password
+            cursor.execute(
+                "INSERT INTO users (username, email, password) VALUES (%s, %s, %s)",
+                (username, email, password)
+            )
+            db.commit()
             return redirect(url_for("login"))
 
     return render_template("register.html", error=error)
