@@ -1,41 +1,67 @@
+/* Global Page Style */
 body {
     font-family: Arial, sans-serif;
     background: linear-gradient(135deg, #667eea, #764ba2);
     height: 100vh;
+    margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0;
 }
 
+/* Common Container */
 .container {
     background: white;
-    padding: 25px;
+    padding: 30px;
+    width: 320px;
     border-radius: 10px;
-    width: 300px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     text-align: center;
 }
 
+/* Input Fields */
 input {
     width: 90%;
     padding: 10px;
     margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
+/* Buttons */
 button {
-    padding: 10px;
     width: 100%;
+    padding: 10px;
     background: #667eea;
     border: none;
     color: white;
+    font-size: 16px;
     cursor: pointer;
+    border-radius: 5px;
 }
 
 button:hover {
     background: #5a67d8;
 }
 
+/* BMI Result */
 .result {
     margin-top: 15px;
     font-size: 18px;
+}
+
+/* Links */
+a {
+    color: #5a67d8;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Error Message */
+.error {
+    color: red;
+    margin-top: 10px;
 }
