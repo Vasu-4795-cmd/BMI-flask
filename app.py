@@ -14,9 +14,9 @@ db = mysql.connector.connect(
 )
 cursor = db.cursor()
 
-@app.route("/", methods=["GET", "POST"])
-def bmi():
-    if "user" not in session:
+@app.route("/bmi/<username>", methods=["GET", "POST"])
+def bmi(username):
+    if "user" not in session or session["user"] != username:
         return redirect(url_for("login"))
 
     bmi_value = None
@@ -37,7 +37,7 @@ def bmi():
         else:
             category = "Obese"
 
-    return render_template("index.html", bmi=bmi_value, category=category)
+    return render_template("index.html", bmi=bmi_value, category=category, username=username)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -55,7 +55,7 @@ def login():
 
         if user:
             session["user"] = username
-            return redirect(url_for("bmi"))
+            return redirect(url_for("bmi", username=username))
         else:
             error = "Invalid username or password"
 
