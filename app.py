@@ -6,10 +6,11 @@ app.secret_key = "secret123"
 
 # MySQL connection
 db = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="Deva@123",
-    database="bmi_app2"
+    host="mysql-2f5728bb-vasuperugu8-4ed2.i.aivencloud.com",
+    user="avnadmin",
+    password="AVNS_nXfPdOLnteKvZXs66sm",
+    database="bmi_app2",
+    port="21197"
 )
 cursor = db.cursor()
 
